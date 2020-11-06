@@ -1,0 +1,30 @@
+{% extends 'store/layout.html' %}
+{% block title %} - {% endblock %}
+
+{% block content %}
+<main>
+    <section id="category">
+        <h2>Title</h2>
+        <div class="container small items-wrapper">
+            {% for product in products %}
+            <a href="{% url 'detail-view' product.id %}">
+            <div class="card-item">
+                <div class="info">
+                    <ul>
+                        <li><strong>Model:</strong> {{product.name}}</li>
+                        <li><strong>Price:</strong> $ {{product.price}}</li>
+                    </ul>
+                </div>
+                <img src="{{product.image}}" alt="{{product.name}}">
+                
+             </div>
+            </a>
+            {% endfor %}
+            
+        </div>    
+    </section>
+</main>
+{% endblock %}
+
+{% block scripgts %}
+{% endblock %}

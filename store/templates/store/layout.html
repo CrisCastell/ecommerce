@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'flaticon/flaticon.css' %}">
+    <script>const user = '{{user}}';</script>
+</head>
+<body>
+    
+    <header>
+        <div class="container">
+            <div class="h1-box">
+                <a href="{% url 'home' %}"><h1>Ecommerce</h1></a>
+                <button id="aside-btn" class="nav-btn"><!--<img src="https://img.icons8.com/android/24/000000/menu.png"/>-->&#9776</button>
+                <a class="flaticon-shopping-cart cart-btn" id="cart-in" href="{% url 'cart' %}"><span class="mini-total">0</span></a>
+            </div>
+            
+            <div id="overlay"></div>
+
+            <nav class="nav">
+                <button class="nav-btn flaticon-remove"></button>
+                <ul>
+                   <!-- <li><a class="flaticon-open-book" href="" data-icon="open-book">About</a></li> -->
+                   
+                   <li class="cat-li"><a class="flaticon-list" id="category" data-icon="list">Category</a></li>
+                   <div id="cat-box" class="drop-box">
+                       <ul>
+                           <li><a href="/category/BS">Best-Sellers</a></li>
+                           <li><a href="/category/N">Latest Products</a></li>
+                           <li><a href="/category/D">Discounts</a></li>
+                       </ul>
+                   </div>
+                   {% if user.is_authenticated %}
+                   <li><a class="btn" id="mini-profile">{{user.customer.username}}</a></li>
+                   <div class="drop-box" id="profile-box">
+                        <ul>
+                            <li><a class="flaticon-user" href="{% url 'profile' %}" data-icon="user">Profile</a></li>
+                            <li><a href="{% url 'logout' %}">Log out</a></li>
+                        </ul>
+                   </div>
+                   {% else %}
+                   <li><a class="flaticon-users" href="{% url 'login' %}" data-icon="users">Log In</a></li>
+                   {% endif %}
+                </ul>
+            </nav>
+            
+            <a class="flaticon-shopping-cart cart-btn outside-btn" id="cart-out" href="{% url 'cart' %}"><span class="mini-total">0</span></a>
+        </div>        
+    </header>
+    {% block content %}
+    {% endblock %}
+    {% block scripts %}
+    {% endblock%}
+    <footer>Copyright</footer>
+    <script src="{% static 'js/mymain.js' %}"></script>
+    
+</body>
+</html>

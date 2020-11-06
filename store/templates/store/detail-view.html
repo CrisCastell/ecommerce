@@ -1,0 +1,65 @@
+{% extends 'store/layout.html' %}
+{% load static %}
+{% block title %} - Cart{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="title">
+        <h2>{{product.name}}</h2>
+    </div>
+    <div class="info">
+        <div class="pictures">
+            <div class="main-pic">
+                
+                {% if product.image %}
+                <img id="main-img" src="{{product.image}}" alt="{{product.name}}">
+                {% else %}
+                <img src="{% static 'media/no-image.jpg' %}" alt="{{product.name}}">
+                {% endif %}
+            </div>
+            
+            <div class="secondary-pics">
+                <img class="secondary-img" src="{{product.image}}" alt="Cualquier cosa">
+                {% for img in images %}
+                <img class="secondary-img" src="{{img.image}}" alt="Cualquier cosa">
+                {% empty %}
+                <img class="secondary-img" src="{{product.image}}" alt="{{product.name}}">
+                <img class="secondary-img" src="https://images.unsplash.com/photo-1572058678723-8c4f93575e39?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="{{product.name}}">
+                <img class="secondary-img" src="{{product.image}}" alt="{{product.name}}">
+
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="details">
+            <p><strong id="price">Price: $ {{product.price}}</strong></p>
+            <p><span id="model">{{product.description}}
+            </span></p>
+            
+            <button data-product="{{product.id}}" data-action="add" class="btn" id="detail-button">Add to the cart</button>
+        </div>
+    </div>
+    <div><h3>You may like</h3></div>
+    <div class="other">
+        {% for product in similar %}
+        <a href="{% url 'detail-view' product.id %}">
+        <div class="card-item">
+            <div class="info">
+                <ul>
+                    <li><strong>Model:</strong> {{product.name}}</li>
+                    <li><strong>Price:</strong> {{product.price}}</li>
+                </ul>
+            </div>
+            <img src="{{product.image}}" alt="{{product.name}}">
+        </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/detailView.js' %}"></script>
+{% endblock %}

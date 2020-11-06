@@ -1,0 +1,94 @@
+{% extends 'store/layout.html' %}
+{% load static %}
+
+{% block title %} - Home{% endblock %}
+
+{% block content %}
+<main id="index-main">
+    <section id="carousel-container">
+        <div id="carousel-slide">
+
+            <div id="lastImg">
+                <img src="{{ last.product.image }}" alt="{{ last.product.image }}">
+                <a class="btn promo" href="{% url 'detail-view' last.product.id %}">Shop Now</a>
+            </div>
+            {% for pro in slide %}
+            <div>
+                <img src="{{pro.product.image }}" alt="pro.product.name">
+                <a class="btn promo" href="{% url 'detail-view' pro.product.id %}">Shop Now</a>
+            </div>
+            {% endfor %}
+            <div id="firstImg">
+                <img src="{{ first.product.image }}" alt="{first.product.name}">
+                <a class="btn promo" href="{% url 'detail-view' first.product.id %}">Shop Now</a>
+            </div>
+        </div>
+        <button class="slide-btn flaticon-left-arrow" id="prevBtn"></button>
+        <button class="slide-btn flaticon-next" id="nextBtn"></button>
+    </section>
+    
+    <section id="best-sellers">
+        <h2>Best Sellers</h2>
+        <div class="container items-wrapper">
+            {% for product in best %}
+            <a href="{% url 'detail-view' product.id %}">
+            <div class="card-item">
+                <div class="info">
+                    <ul>
+                        <li><strong>Model:</strong> {{product.name}}</li>
+                        <li><strong>Price:</strong> $ {{product.price}}</li>
+                        <li class="label bs">Best-Sellers</li>
+                    </ul>
+                </div>
+                <img src="{{product.image}}" alt="{{product.name}}">
+                
+             </div>
+            </a>
+            {% endfor %}
+            
+        </div>    
+    </section>
+    <section id="new">
+        <h2>New</h2>
+        <div class="container items-wrapper">
+            {% for product in new %}
+            <a href="{% url 'detail-view' product.id %}">
+            <div class="card-item">
+                <div class="info">
+                    <ul>
+                        <li><strong>Model:</strong> {{product.name}}</li>
+                        <li><strong>Price:</strong> $ {{product.price}}</li>
+                        <li class="label new">New</li>
+                    </ul>
+                </div>
+                <img src="{{product.image}}" alt="{{product.name}}">
+            </div>
+            </a>
+            {% endfor %}
+        </div>    
+    </section>
+    <section id="discounts">
+        <h2>Discounts</h2>
+        <div class="container items-wrapper">
+            {% for product in discount %}
+            <a href="{% url 'detail-view' product.id %}">
+            <div class="card-item">
+                <div class="info">
+                    <ul>
+                        <li><strong>Model:</strong> {{product.name}}</li>
+                        <li><strong>Price:</strong> $ {{product.price}}</li>
+                        <li class="label dis">Discount</li>
+                    </ul>
+                </div>
+                <img src="{{product.image}}" alt="{{product.name}}">
+            </div>
+            </a>
+            {% endfor %}
+            
+        </div>    
+    </section>
+</main>
+<script src="{% static 'js/index.js' %}"></script>
+{% endblock %}
+{% block script %}
+{% endblock %}

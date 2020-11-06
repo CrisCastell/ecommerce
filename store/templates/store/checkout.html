@@ -1,0 +1,78 @@
+{% extends 'store/layout.html' %}
+{% load static %}
+{% block title %} - Checkout{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="title">
+        <h2>Checkout</h2>
+    </div>
+    <div class="info">
+        <div class="address">
+            <h3>Enter your address</h3>
+    
+            <form id="customer-info" class="form">
+                
+                
+                
+                <div  class="profile-form">
+                    {% if user.is_authenticated == False %}
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" required>
+                    {% endif %}
+
+                    {% if user.follower.address %}
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" required value="{{user.follower.address}}">
+                    {% else %}
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" required>
+                    {% endif %}
+                    {% if user.follower.city %}
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" required value="{{user.follower.city}}">
+                    {% else %}
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" required>
+                    {% endif %}
+                    {% if user.follower.state %}
+                    <label for="state">State</label>
+                    <input type="text" id="state" name="state" required value="{{user.follower.state}}">
+                    {% else %}
+                    <label for="state">State</label>
+                    <input type="text" id="state" name="state" required>
+                    {% endif %}
+                    {% if user.follower.zip_code %}
+                    <label for="zip-code">Zip Code</label>
+                    <input type="text" id="zip-code" name="zip-code" required value="{{user.follower.zip_code}}">
+                    {% else %}
+                    <label for="zip-code">Zip Code</label>
+                    <input type="text" id="zip-code" name="zip-code" required>
+                    {% endif %}
+                    
+                </div>
+                
+                <button class="btn" id="proceed" type="submit">Proceed to Pay</button>
+                <!-- Set up a container element for the button -->
+                <div id="paypal-button-container"></div>
+            </form>
+            
+        </div>
+        <div class="payment">
+            <a class="btn back-cart" href="{% url 'cart' %}">Back to the cart</a>
+            <p><strong>Items:</strong> <span class="total-items">0</span></p>
+            <p><strong>Subtotal:</strong> $ <span class="subtotal">0.00</span></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+<script src="https://www.paypal.com/sdk/js?client-id=AQQ-7nNZ3E_HpgzC5pCiEWqMie8vq34dChhT5z4X3bxoqUC2QsIqhx1takdRwx-Nc7RlZWOg7XGtSivD&currency=USD"></script>
+<script src="{% static 'js/checkout.js' %}"></script>
+
+{% endblock %}

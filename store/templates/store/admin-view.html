@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <title>Admin-view</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        body{
+            background-color: #ccc;
+        }
+        h1{
+            margin:1rem auto;
+            text-align: center;
+        }
+        .shipCard{
+            background-color: #fff;
+            border-radius:8px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        ul{
+            list-style: none;
+        }
+        .order-box{
+            display:flex;
+            padding:1rem;
+        }
+        .shipCard div{
+            padding: 1rem;
+        }
+        button{
+            height:50px;
+            border-radius: 4px;
+            background-color: #ccc;
+            border: none;
+            transition: all 200ms linear;
+            cursor:pointer;
+        }
+        button:hover{
+            background-color: #aaa;
+        }
+        @media (max-width: 750px){
+            *{
+                flex-direction:column;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Shippings</h1>
+    <div id="shipping-box"></div>
+    <script>
+        function getToken(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+        const csrftoken = getToken('csrftoken');   
+        document.addEventListener('DOMContentLoaded', function(){
+            fetch('/shippings-api')
+            .then(response => response.json())
+            .then(data => showShippings(data))
+            .catch(err => console.log(err))
+        })
+
+        function showShippings(data){
+            const shippingBox = document.querySelector('#shipping-box');
+            shippingBox.innerHTML = '';
+            data.forEach(elem =>{
+                const shipCard = document.createElement('div');
+                
+                shipCard.className = 'shipCard';
+
+                const orderBox = document.createElement('div');
+                orderBox.className = 'order-box';
+                const itemBox = document.createElement('div');
+                const buttonBox = document.createElement('div');
+
+
+                const itemsList = document.createElement('ul');
+                elem.items.forEach(item =>{
+                    const itemLi = document.createElement('li');
+                    itemLi.innerHTML = `<strong>Product:</strong> ${item.productName} - <strong>Quantity:</strong> ${item.quantity} - <strong>Size:</strong> ${item.size}`;
+                    itemsList.appendChild(itemLi);
+                })
+                itemBox.appendChild(itemsList);
+
+
+
+                orderBox.innerHTML = `
+                            <div>                        
+                                <h2>${elem.shipping.shippingId}</h2>
+                            </div>
+                            <div>                        
+                                <h2>Customer</h2>
+                                <ul>
+                                    <li><strong>Username:</strong> ${elem.customer.username}</li>
+                                    <li><strong>Email:</strong> ${elem.customer.email}</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h2>Address Info</h2>
+                                <ul>
+                                    <li><strong>Address:</strong> ${elem.shipping.address}</li>
+                                    <li><strong>City:</strong> ${elem.shipping.city}</li>
+                                    <li><strong>State:</strong> ${elem.shipping.state}</li>
+                                    <li><strong>Zip Code:</strong> ${elem.shipping.zip_code}</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h2>Order</h2>
+                                <ul>
+                                    <li><strong>Order Transaction:</strong> ${elem.orderTransaction}</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h2>Date</h2>
+                                <ul>
+                                    <li><strong>Date:</strong> ${elem.shipping.date}</li>
+                                </ul>
+                            </div>                   
+                                    `;
+                const button = document.createElement('button');
+                button.innerHTML = 'Mark as Delivered'
+                button.setAttribute('value', elem.shipping.shippingId)
+                button.addEventListener('click', function(){
+                    markAsDelivered(this.value);
+                })
+                buttonBox.appendChild(button);
+                shipCard.appendChild(orderBox);
+                shipCard.appendChild(itemBox);
+                shipCard.appendChild(buttonBox);
+                shippingBox.appendChild(shipCard);
+            })
+        }
+
+        function markAsDelivered(id){
+            url = '/shippings-api';
+            initObject = {
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                    'X-CSRFToken':csrftoken
+                },
+                body:JSON.stringify({'id':id})
+            }
+            fetch(url, initObject)
+            .then(response => response.json())
+            .then(data => showShippings(data))
+            .catch(err => console.log(err))
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% extends 'store/layout.html' %}
+
+{% block title%} - Register{% endblock %}
+
+{% block content%}
+<div class="auth-container">
+    <div class="auth-box">
+        <h2>Register</h2>
+        {% if message %}
+        <div class="message">
+            <p>{{message}}</p>
+        </div>
+        {% endif %}
+        <form class="form" action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+
+            <label for="username">Username</label>
+            <input type="text" name="username" class="input" maxlength="150" autofocus required id="username">
+        
+            
+        
+            <label for="email">Email address</label>
+            <input type="text" name="email" class="input" maxlength="254" id="email">
+        
+            
+        
+            <label for="password">Password</label>
+            <input type="password" name="password" required id="password">
+        
+            
+        
+            <label for="confirmation">Password confirmation</label>
+            <input type="password" name="confirmation" required id="confirmation">
+
+            <button type="submit" class="btn">Register</button>
+        </form>
+        <p>Already have an acount? <a href="{% url 'login' %}">Log in here</a></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

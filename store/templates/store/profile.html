@@ -1,0 +1,36 @@
+{% extends 'store/layout.html' %}
+{% load static %}
+{% block title%} - Profile{% endblock %}
+
+{% block content%}
+<div class="content-wrapper">
+    <div class="title">
+        <h2>User Profile</h2>
+    </div>
+    <div class="info profile">
+        <form class="form centered" action="{% url 'profile' %}" method='POST' enctype="multipart/form-data">
+            <div class="profile-form">
+                {% csrf_token %}
+                
+                {% for field in form %}
+            
+                <label for="id_{{field.name}}">{{field.label}}</label>
+                {{field}}
+            
+                {% endfor %}
+            </div>
+            <button class="btn" type="submit">Update Profile</button>
+        </form>
+        <!-- <div class="profile-pic">
+            <img class="pic" src="{{user.customer.profile_pic.url}}" alt="{{user.follower.username}}">
+            {% if user.customer.first_name is not None and user.customer.last_name is not None%}
+            <p><strong>{{user.customer.first_name}} {{user.customer.last_name}}</strong></p>
+            {% endif %}
+            <p><strong>{{user.customer.username}}</strong></p>
+        </div> -->
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'store/layout.html' %}
+{% load static %}
+{% block title %} - Cart{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="title">
+        <h2>Shopping Cart</h2>
+    </div>
+    <div class="info">
+        <div class="items-box" id="items-box">
+            <table>
+                <thead>
+                    <tr>
+                        <th><strong>Product</strong></th>
+                        <th><strong>Info</strong></th>
+                        <th><strong>Price</strong></th>
+                        <th><strong>Quantity</strong></th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                    {% for item in items %}
+                    <tr>
+                        <td class="cell"><img src="{{item.product.image}}" alt="{{item.product.name}}"></td>
+                        <td class="cell"><a href="{% url 'detail-view' item.product.id %}">{{item.product.name}}</a></td>
+                        <td class="cell">$ {{item.product.price|floatformat:2}}</td>
+                        <td class="cell quantity">
+                            <button class="update-order" data-product="{{item.product.id}}" data-action="remove">-</button>
+                            <div><p id="quantity-{{item.product.id}}">{{item.quantity}}</p></div>
+                            <button class="update-order" data-product="{{item.product.id}}" data-action="add">+</button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <div>
+                        <h3>0 items in your cart</h3>
+                    </div>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        </div> 
+        <div class="total-box">
+            <p><strong>Items:</strong> <span class="total-items">0</span></p>
+            <p><strong>Subtotal:</strong> $ <span class="subtotal">0.00</span></p>
+            <a class="btn" href="{% url 'checkout' %}">Proceed to checkout</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
