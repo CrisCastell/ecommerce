@@ -129,6 +129,7 @@ button.btn, a.btn {
 }
 
 header {
+  background-color: rgba(0, 0, 0, 0.4);
   color: #EBF0EA;
   width: 100%;
   padding: 0.6rem 0;
@@ -441,7 +442,7 @@ section:nth-child(even) .card-item {
   box-shadow: 5px 3px 5px rgba(0, 0, 0, 0.18);
   display: flex;
   flex-direction: column;
-  padding: 4.4rem 1.5rem 0rem 1.5rem;
+  padding: 4.4rem 1.5rem 3rem 1.5rem;
 }
 .content-wrapper .btn {
   width: 60%;
@@ -783,6 +784,9 @@ section:nth-child(even) .card-item {
   }
   .info .items-box thead, .adress .items-box thead {
     display: none;
+  }
+  .info .items-box tr, .adress .items-box tr {
+    border: 1px solid #ccc;
   }
   .info .total-box, .info .profile-pic, .info .payment, .adress .total-box, .adress .profile-pic, .adress .payment {
     order: -1;
