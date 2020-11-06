@@ -129,7 +129,6 @@ button.btn, a.btn {
 }
 
 header {
-  background-color: rgba(0, 0, 0, 0.4);
   color: #EBF0EA;
   width: 100%;
   padding: 0.6rem 0;
@@ -714,6 +713,11 @@ section:nth-child(even) .card-item {
   .h1-box {
     display: flex;
     justify-content: space-between;
+  }
+
+  .title {
+    margin-bottom: 3rem;
+    scale: 0.8;
   }
 
   #aside-btn {

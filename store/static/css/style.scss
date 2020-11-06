@@ -142,7 +142,7 @@ button.btn, a.btn{
 
 
 header{
-    background-color: rgba(0,0,0,0.4);
+    // background-color: rgba(0,0,0,0.4);
     color:$background-color;
     width: 100%;
     padding: 0.6rem 0;
@@ -752,6 +752,10 @@ section:nth-child(even){
         display: flex;
         justify-content:space-between;
         
+    }
+    .title{
+        margin-bottom: 3rem;
+        scale: 0.8;
     }
     #aside-btn{
         display: block;
